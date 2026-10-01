@@ -27,7 +27,9 @@ void close(); // Frees media and shuts down SDL
 void process_input(SDL_Keycode key); // process key press events
 
 // takes in two 2D points and draws a line between them
-void draw_line(Vec2 s, Vec2 e);
+void render_line(Vec2 s, Vec2 e);
+void draw_line_h(Vec2 s, Vec2 e);
+void draw_line_v(Vec2 s, Vec2 e);
 
 // takes in a 3D point and converts it into a display coordinate (projects onto XY then coverts to display)
 Vec2 convert_to_display(Vec3 p);
@@ -36,7 +38,6 @@ SDL_Window* gWindow{ nullptr }; // the window we'll be rendering to
 SDL_Renderer* gRenderer{ nullptr }; // the renderer
 
 // active object
-Object s1;
-Object s2;
+Object obj;
 
 #endif /* main_h */

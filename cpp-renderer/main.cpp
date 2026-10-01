@@ -15,9 +15,6 @@ int main(int argc, char* args[])
         return 1;
     }
     
-    s1.translate({-125,0,0});
-    s2.translate({125,0,0});
-    
     // quit program signal
     bool quit{ false };
     
@@ -89,10 +86,10 @@ void close()
 void render()
 {
     // iterate through each polygon in the object and grab its points
-    for (std::vector<float> p : s2.polygons) {
+    for (std::vector<float> p : obj.polygons) {
         std::vector<Vec3> polygon;
         for (int i : p) {
-            polygon.push_back(s2.points[i]);
+            polygon.push_back(obj.points[i]);
         }
         
         // iterate through the points in pairs to draw lines
@@ -108,31 +105,7 @@ void render()
             // draw the line
             SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
             SDL_SetRenderColorScale(gRenderer, 1.0);
-            draw_line(d_start, d_end);
-        }
-    }
-    
-    // iterate through each polygon in the object and grab its points
-    for (std::vector<float> p : s1.polygons) {
-        std::vector<Vec3> polygon;
-        for (int i : p) {
-            polygon.push_back(s1.points[i]);
-        }
-        
-        // iterate through the points in pairs to draw lines
-        for (int i = 0; i < polygon.size(); i++) {
-            // grab the start and end point of the line
-            Vec3 start = polygon[i];
-            Vec3 end = polygon[(i+1) % polygon.size()];
-            
-            // convert to display coords
-            Vec2 d_start = convert_to_display(start);
-            Vec2 d_end = convert_to_display(end);
-            
-            // draw the line
-            SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
-            SDL_SetRenderColorScale(gRenderer, 1.0);
-            if (SDL_RenderLine(gRenderer, d_start.x, d_start.y, d_end.x, d_end.y)== false) {SDL_Log("did not draw line: %s\n", SDL_GetError());}
+            render_line(d_start, d_end);
         }
     }
 }
@@ -158,46 +131,96 @@ Vec2 convert_to_display(Vec3 p) {
 
 // implements Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
-void draw_line(Vec2 s, Vec2 e) {
+// https://www.youtube.com/watch?v=CceepU1vIKo
+void render_line(Vec2 s, Vec2 e) {
+    if (abs(e.x-s.x) > abs(e.y-s.y)) {
+        draw_line_h(s, e);
+    } else {
+        draw_line_v(s, e);
+    }
+}
+void draw_line_h(Vec2 s, Vec2 e) {
+    // if end point is before the start point, swap them
+    if (s.x > e.x) {
+        Vec2 temp = {s.x, s.y};
+        s = {e.x, e.y};
+        e = {temp.x, temp.y};
+    }
+    
     int dx = e.x - s.x;
     int dy = e.y - s.y;
-    int D = 2*dy - dx;
-    int y = s.y;
     
-    for (int x = s.x; x <= e.x; x++) {
-        SDL_RenderPoint(gRenderer, x, y);
-        if (D > 0) {
-            y = y + 1;
-            D = D + (2 * (dy - dx));
-        } else {
-            D = D + 2*dy;
+    int dir = (dy < 0) ? -1 : 1;
+    dy *= dir;
+    
+    if (dx != 0) {
+        int y = s.y;
+        int p = 2*dy - dx;
+        
+        for (int i = 0; i <= dx; i++) {
+            SDL_RenderPoint(gRenderer, s.x + i, y);
+            if (p >= 0) {
+                y += dir;
+                p -= 2*dx;
+            }
+            
+            p += 2*dy;
+        }
+    }
+}
+void draw_line_v(Vec2 s, Vec2 e) {
+    // if end point is before the start point, swap them
+    if (s.y > e.y) {
+        Vec2 temp = {s.x, s.y};
+        s = {e.x, e.y};
+        e = {temp.x, temp.y};
+    }
+    
+    int dx = e.x - s.x;
+    int dy = e.y - s.y;
+    
+    int dir = (dx < 0) ? -1 : 1;
+    dx *= dir;
+    
+    if (dy != 0) {
+        int x = s.x;
+        int p = 2*dx - dy;
+        
+        for (int i = 0; i <= dy; i++) {
+            SDL_RenderPoint(gRenderer, x, s.y + i);
+            if (p >= 0) {
+                x += dir;
+                p -= 2*dy;
+            }
+            
+            p += 2*dx;
         }
     }
 }
 
 void process_input(SDL_Keycode key) {
     // reset object
-    if (key == SDLK_R) { s1.reset(); }
+    if (key == SDLK_R) { obj.reset(); }
     
     // left and right translations
-    if (key == SDLK_LEFT) { s1.translate({-kTransform,0,0}); }
-    if (key == SDLK_RIGHT) { s1.translate({kTransform,0,0}); }
-    if (key == SDLK_UP) { s1.translate({0,kTransform,0}); }
-    if (key == SDLK_DOWN) { s1.translate({0,-kTransform,0}); }
+    if (key == SDLK_LEFT) { obj.translate({-kTransform,0,0}); }
+    if (key == SDLK_RIGHT) { obj.translate({kTransform,0,0}); }
+    if (key == SDLK_UP) { obj.translate({0,kTransform,0}); }
+    if (key == SDLK_DOWN) { obj.translate({0,-kTransform,0}); }
     
     // larger and smaller scaling
-    if (key == SDLK_Q) { s1.scale(kScale); }
-    if (key == SDLK_E) { s1.scale(1/kScale); }
+    if (key == SDLK_Q) { obj.scale(kScale); }
+    if (key == SDLK_E) { obj.scale(1/kScale); }
     
     // x rotation
-    if (key == SDLK_1) { s1.rotate_x(5);}
-    if (key == SDLK_2) { s1.rotate_x(-5);}
+    if (key == SDLK_1) { obj.rotate_x(5);}
+    if (key == SDLK_2) { obj.rotate_x(-5);}
     
     // y rotation
-    if (key == SDLK_3) { s1.rotate_y(5); s2.rotate_y(5);}
-    if (key == SDLK_4) { s1.rotate_y(-5); s2.rotate_y(-5);}
+    if (key == SDLK_3) { obj.rotate_y(5);}
+    if (key == SDLK_4) { obj.rotate_y(-5);}
     
     // z rotation
-    if (key == SDLK_5) { s1.rotate_z(5);}
-    if (key == SDLK_6) { s1.rotate_z(-5);}
+    if (key == SDLK_5) { obj.rotate_z(5);}
+    if (key == SDLK_6) { obj.rotate_z(-5);}
 }
