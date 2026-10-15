@@ -33,10 +33,10 @@ int main(int argc, char* args[])
         }
         
         // clean the screen
-        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255); // Set the color used for drawing operations.
-        SDL_RenderClear(gRenderer); // Clear the current rendering target with the drawing color.
+        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+        SDL_RenderClear(gRenderer);
         
-        // render object(s)
+        // render the scene
         render();
         
         // update the renderer
@@ -69,6 +69,15 @@ bool init()
         }
     }
     
+    // initialize scene object list
+    scene.push_back(Object(CUBE));
+    scene.push_back(Object(PYRAMID));
+    scene.push_back(Object(CUBE));
+    
+    // the two cubes share a base vertex list, this permanately moves them to the left and right
+    scene[0].perm_translate({-150,0,0});
+    scene[2].perm_translate({150,0,0});
+    
     return success;
 }
 
@@ -86,27 +95,35 @@ void close()
 void render()
 {
     // iterate through each polygon in the object and grab its points
-    for (std::vector<float> p : obj.polygons) {
-        std::vector<Vec3> polygon;
-        for (int i : p) {
-            polygon.push_back(obj.points[i]);
-        }
-        
-        // iterate through the points in pairs to draw lines
-        for (int i = 0; i < polygon.size(); i++) {
-            // grab the start and end point of the line
-            Vec3 start = polygon[i];
-            Vec3 end = polygon[(i+1) % polygon.size()];
+    int cur_i = 0;
+    for (Object obj : scene) {
+        for (std::vector<float> p : obj.polygons) {
+            std::vector<Vec3> polygon;
+            for (int i : p) {
+                polygon.push_back(obj.vertices[i]);
+            }
             
-            // convert to display coords
-            Vec2 d_start = convert_to_display(start);
-            Vec2 d_end = convert_to_display(end);
-            
-            // draw the line
-            SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
-            SDL_SetRenderColorScale(gRenderer, 1.0);
-            render_line(d_start, d_end);
+            // iterate through the points in pairs to draw lines
+            for (int i = 0; i < polygon.size(); i++) {
+                // grab the start and end point of the line
+                Vec3 start = polygon[i];
+                Vec3 end = polygon[(i+1) % polygon.size()];
+                
+                // convert to display coords
+                Vec2 d_start = convert_to_display(start);
+                Vec2 d_end = convert_to_display(end);
+                
+                // if active object, use special draw color
+                if (cur_i == active_i)
+                    SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
+                else
+                    SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+                
+                // draw the line
+                render_line(d_start, d_end);
+            }
         }
+        cur_i++;
     }
 }
 
@@ -199,28 +216,33 @@ void draw_line_v(Vec2 s, Vec2 e) {
 }
 
 void process_input(SDL_Keycode key) {
+    Object* obj = &scene[active_i];
+    
+    // change active object
+    if (key == SDLK_TAB)    active_i = (active_i + 1) % scene.size();
+    
     // reset object
-    if (key == SDLK_R) { obj.reset(); }
+    if (key == SDLK_R)      obj->reset();
     
     // left and right translations
-    if (key == SDLK_LEFT) { obj.translate({-kTransform,0,0}); }
-    if (key == SDLK_RIGHT) { obj.translate({kTransform,0,0}); }
-    if (key == SDLK_UP) { obj.translate({0,kTransform,0}); }
-    if (key == SDLK_DOWN) { obj.translate({0,-kTransform,0}); }
+    if (key == SDLK_LEFT)   obj->translate({-kTransform,0,0});
+    if (key == SDLK_RIGHT)  obj->translate({kTransform,0,0});
+    if (key == SDLK_UP)     obj->translate({0,kTransform,0});
+    if (key == SDLK_DOWN)   obj->translate({0,-kTransform,0});
     
     // larger and smaller scaling
-    if (key == SDLK_Q) { obj.scale(kScale); }
-    if (key == SDLK_E) { obj.scale(1/kScale); }
+    if (key == SDLK_Q)      obj->scale(kScale);
+    if (key == SDLK_E)      obj->scale(1/kScale);
     
     // x rotation
-    if (key == SDLK_1) { obj.rotate_x(5);}
-    if (key == SDLK_2) { obj.rotate_x(-5);}
+    if (key == SDLK_1)      obj->rotate_x(5);
+    if (key == SDLK_2)      obj->rotate_x(-5);
     
     // y rotation
-    if (key == SDLK_3) { obj.rotate_y(5);}
-    if (key == SDLK_4) { obj.rotate_y(-5);}
+    if (key == SDLK_3)      obj->rotate_y(5);
+    if (key == SDLK_4)      obj->rotate_y(-5);
     
     // z rotation
-    if (key == SDLK_5) { obj.rotate_z(5);}
-    if (key == SDLK_6) { obj.rotate_z(-5);}
+    if (key == SDLK_5)      obj->rotate_z(5);
+    if (key == SDLK_6)      obj->rotate_z(-5);
 }

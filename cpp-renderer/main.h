@@ -5,10 +5,9 @@
 //  Created by Gavin Dominique on 9/30/26.
 //
 
-#ifndef main_h
-#define main_h
+#pragma once
 
-#include "structs.cpp"
+#include "structs.h"
 
 // screen dimension constants
 constexpr int kScreenWidth{ 640 };
@@ -37,7 +36,6 @@ Vec2 convert_to_display(Vec3 p);
 SDL_Window* gWindow{ nullptr }; // the window we'll be rendering to
 SDL_Renderer* gRenderer{ nullptr }; // the renderer
 
-// active object
-Object obj;
-
-#endif /* main_h */
+// active object + list of loaded objects
+int active_i = 0;
+std::vector<Object> scene;
