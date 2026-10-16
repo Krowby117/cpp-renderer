@@ -23,6 +23,7 @@ int main(int argc, char* args[])
     SDL_zero(e);
     
     // MAIN LOOP //
+    render();
     while (quit == false) {
         // get event data
         while (SDL_PollEvent(&e) == true ) {
@@ -31,16 +32,6 @@ int main(int argc, char* args[])
             else if (e.type == SDL_EVENT_KEY_DOWN) // if key down event, process input
                 process_input(e.key.key);
         }
-        
-        // clean the screen
-        SDL_SetRenderDrawColor(gRenderer, 75, 75, 75, 255);
-        SDL_RenderClear(gRenderer);
-        
-        // render the scene
-        render();
-        
-        // update the renderer
-        SDL_RenderPresent(gRenderer);
     }
     
     // clean up and end the program
@@ -94,6 +85,10 @@ void close()
 
 void render()
 {
+    // clean the screen
+    SDL_SetRenderDrawColor(gRenderer, 75, 75, 75, 255);
+    SDL_RenderClear(gRenderer);
+    
     // iterate through each polygon in the object and grab its points
     int cur_i = 0;
     for (Object obj : scene) {
@@ -125,6 +120,9 @@ void render()
         }
         cur_i++;
     }
+    
+    // update the renderer
+    SDL_RenderPresent(gRenderer);
 }
 
 Vec2 convert_to_display(Vec3 p) {
@@ -245,4 +243,6 @@ void process_input(SDL_Keycode key) {
     // z rotation
     if (key == SDLK_5)      obj->rotate_z(kRotate);
     if (key == SDLK_6)      obj->rotate_z(-kRotate);
+    
+    render();
 }
