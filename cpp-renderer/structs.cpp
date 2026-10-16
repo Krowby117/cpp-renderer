@@ -134,87 +134,82 @@ void Object::perm_translate(std::vector<float> t) {
 }
 
 void Object::scale(float s) {
+    // translate to origin
     std::vector<float> ref = get_reference_point();
+    translate({-ref[0], -ref[1], -ref[2]});
     
     for (int i = 0; i < vertices.size(); i++) {
-        // translate to origin
-        translate({-ref[0], -ref[1], -ref[2]});
-        
-        // scale
         vertices[i].x *= s;
         vertices[i].y *= s;
         vertices[i].z *= s;
-        
-        // translate back to spot
-        translate(ref);
     }
+    
+    // translate back to original location
+    translate(ref);
 }
 
 void Object::rotate_x(float a) {
+    // translate to origin
     std::vector<float> ref = get_reference_point();
+    translate({-ref[0], -ref[1], -ref[2]});
+    
+    // cos sin values
+    float c = cos(a);
+    float s = sin(a);
     
     for (int i = 0; i < vertices.size(); i++) {
-        // translate to origin
-        translate({-ref[0], -ref[1], -ref[2]});
-        
-        // cos sin values
-        float c = cos(a);
-        float s = sin(a);
-
         // grab copies of original points
         float y = vertices[i].y;
         float z = vertices[i].z;
         
         vertices[i].y = (y * c) - (z * s);
         vertices[i].z = (y * s) + (z * c);
-        
-        // translate back to spot
-        translate(ref);
     }
+    
+    // translate back to original location
+    translate(ref);
 }
 
 void Object::rotate_y(float a) {
+    // translate to origin
     std::vector<float> ref = get_reference_point();
+    translate({-ref[0], -ref[1], -ref[2]});
+    
+    // cos sin values
+    float c = cos(a);
+    float s = sin(a);
     
     for (int i = 0; i < vertices.size(); i++) {
-        // translate to origin
-        translate({-ref[0], -ref[1], -ref[2]});
-        
-        // cos sin values
-        float c = cos(a);
-        float s = sin(a);
-
         // grab copies of original points
         float x = vertices[i].x;
         float z = vertices[i].z;
         
         vertices[i].x = (x * c) + (z * s);
         vertices[i].z = -(x * s) + (z * c);
-        
-        // translate back to spot
-        translate(ref);
     }
+    
+    // translate back to original location
+    translate(ref);
 }
 
 void Object::rotate_z(float a) {
+    // translate to origin
     std::vector<float> ref = get_reference_point();
+    translate({-ref[0], -ref[1], -ref[2]});
+    
+    // cos sin values
+    float c = cos(a);
+    float s = sin(a);
     
     for (int i = 0; i < vertices.size(); i++) {
-        // translate to origin
-        translate({-ref[0], -ref[1], -ref[2]});
-        
-        // cos sin values
-        float c = cos(a);
-        float s = sin(a);
-
         // grab copies of original points
         float x = vertices[i].x;
         float y = vertices[i].y;
         
         vertices[i].x = (x * c) - (y * s);
         vertices[i].y = (x * s) + (y * c);
-        
-        // translate back to spot
-        translate(ref);
     }
+    
+    // translate back to original location
+    translate(ref);
 }

@@ -17,7 +17,7 @@ constexpr int d{ 500 };
 // transformation constants
 constexpr int kTransform{ 15 };
 constexpr float kScale{ 1.1 };
-constexpr int kRotate{ 30 };
+constexpr float kRotate{ 0.0873 };
 
 
 bool init(); // Starts up SDL and creates the window

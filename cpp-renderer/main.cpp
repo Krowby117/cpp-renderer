@@ -33,7 +33,7 @@ int main(int argc, char* args[])
         }
         
         // clean the screen
-        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(gRenderer, 75, 75, 75, 255);
         SDL_RenderClear(gRenderer);
         
         // render the scene
@@ -115,7 +115,7 @@ void render()
                 
                 // if active object, use special draw color
                 if (cur_i == active_i)
-                    SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
+                    SDL_SetRenderDrawColor(gRenderer, 75, 180, 75, 255);
                 else
                     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
                 
@@ -235,14 +235,14 @@ void process_input(SDL_Keycode key) {
     if (key == SDLK_E)      obj->scale(1/kScale);
     
     // x rotation
-    if (key == SDLK_1)      obj->rotate_x(5);
-    if (key == SDLK_2)      obj->rotate_x(-5);
+    if (key == SDLK_1)      obj->rotate_x(kRotate);
+    if (key == SDLK_2)      obj->rotate_x(-kRotate);
     
     // y rotation
-    if (key == SDLK_3)      obj->rotate_y(5);
-    if (key == SDLK_4)      obj->rotate_y(-5);
+    if (key == SDLK_3)      obj->rotate_y(kRotate);
+    if (key == SDLK_4)      obj->rotate_y(-kRotate);
     
     // z rotation
-    if (key == SDLK_5)      obj->rotate_z(5);
-    if (key == SDLK_6)      obj->rotate_z(-5);
+    if (key == SDLK_5)      obj->rotate_z(kRotate);
+    if (key == SDLK_6)      obj->rotate_z(-kRotate);
 }
