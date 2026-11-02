@@ -92,11 +92,15 @@ void render()
     // iterate through each polygon in the object and grab its points
     int cur_i = 0;
     for (Object obj : scene) {
-        for (std::vector<float> p : obj.polygons) {
-            std::vector<Vec3> polygon;
+        for (vector<float> p : obj.polygons) {
+            vector<Vec3> polygon;
             for (int i : p) {
                 polygon.push_back(obj.vertices[i]);
             }
+            
+            // if the polygon is not visible, skip it
+            if (!is_visible(polygon))
+                continue;
             
             // iterate through the points in pairs to draw lines
             for (int i = 0; i < polygon.size(); i++) {
@@ -211,6 +215,67 @@ void draw_line_v(Vec2 s, Vec2 e) {
             p += 2*dx;
         }
     }
+}
+
+bool is_visible(vector<Vec3> polygon) {
+    // Step 1 : Compute the normal vector of the polygon, then normalize it
+    Vec3 p0 = polygon[0];
+    Vec3 p1 = polygon[1];
+    Vec3 p2 = polygon[2];
+    
+    // compute P and Q
+    Vec3 P = p1 - p0;
+    Vec3 Q = p2 - p0;
+    
+    // cross P and Q to get the surface normal and then normalize it
+    Vec3 N = cross(P, Q);
+    
+    float den = sqrt((N.x * N.x) + (N.y * N.y) + (N.z * N.z));
+    if (den == 0)
+        return false;
+        
+    Vec3 norm = {
+        N.x / den,
+        N.y / den,
+        N.z / den
+    };
+    
+    // Step 2: Compute the Plane Offset
+    float D = dot(norm, p0);
+    
+    
+    // Determine the visibility of the plane from the viewpoint
+    float test = dot(norm, {0,0,-d}) - D;
+    if (test > 0)
+        return true;
+    else
+        return false;
+}
+
+float dot(Vec3 P, Vec3 Q) {
+    return (P.x * Q.x) + (P.y * Q.y) + (P.z * Q.z);
+}
+
+Vec3 cross(Vec3 P, Vec3 Q) {
+    return {
+        (P.y * Q.z) - (P.z * Q.y),
+        (P.z * Q.x) - (P.x * Q.z),
+        (P.x * Q.y) - (P.y * Q.x)
+    };
+}
+
+Vec3 normalize(Vec3 P) {
+    float x = P.x * P.x;
+    float y = P.y * P.y;
+    float z = P.z * P.z;
+    
+    float den = sqrt(x + y + z);
+    
+    return {
+        P.x / den,
+        P.y / den,
+        P.z / den
+    };
 }
 
 void process_input(SDL_Keycode key) {

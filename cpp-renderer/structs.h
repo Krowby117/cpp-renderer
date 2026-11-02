@@ -7,22 +7,36 @@
 
 #pragma once
 
+using namespace std;
+
 // -- Vector Structs -- //
 struct Vec2 {
     float x, y;
     
+    Vec2();
     Vec2(float x, float y);
 };
 
 struct Vec3 {
     float x, y, z;
     
+    Vec3();
     Vec3(float x, float y, float z);
+    
+    Vec3 operator-(const Vec3 &n)
+    {
+        return {
+            this->x - n.x,
+            this->y - n.y,
+            this->z - n.z
+        };
+    }
 };
 
 struct Vec4 {
     float x, y, z, w;
     
+    Vec4();
     Vec4(float x, float y, float z, float w);
     Vec4(float x, float y, float z);
 };
@@ -34,8 +48,8 @@ enum ObjType {
 };
 struct Object {
     // collection of object's verts and polygons
-    std::vector<Vec3> vertices;
-    std::vector<std::vector<float>> polygons;
+    vector<Vec3> vertices;
+    vector<vector<float>> polygons;
 
     // copy of objects vertices without transformations
     std::vector<Vec3> orig_vertices;
@@ -43,12 +57,12 @@ struct Object {
     Object(ObjType type);
     
     // helper functions
-    std::vector<float> get_reference_point();
+    vector<float> get_reference_point();
     void reset();
     
     // translation
-    void translate(std::vector<float> t);
-    void perm_translate(std::vector<float> t);
+    void translate(vector<float> t);
+    void perm_translate(vector<float> t);
     
     // scaling
     void scale(float s);

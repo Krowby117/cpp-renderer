@@ -9,17 +9,20 @@
 #include "structs.h"
 
 // -- Vector Structs -- //
+Vec2::Vec2() {x = y = 0.0;}
 Vec2::Vec2(float x, float y) {
     this->x = x;
     this->y = y;
 }
 
+Vec3::Vec3() {x = y = z = 0.0;}
 Vec3::Vec3(float x, float y, float z) {
     this->x = x;
     this->y = y;
     this->z = z;
 }
-    
+
+Vec4::Vec4() {x = y = z = 0.0; w = 1.0;}
 Vec4::Vec4(float x, float y, float z, float w) {
     this->x = x;
     this->y = y;
@@ -43,11 +46,11 @@ std::vector<Vec3> pyramid_verts = {
     {-50, -50, 50}
 };
 std::vector<std::vector<float>> pyramid_polygons = {
+    {1, 2, 3, 4},       // bottompoly
     {0, 1, 4},          // frontpoly
     {0, 2, 1},          // rightpoly
     {0, 3, 2},          // backpoly
-    {0, 4, 3},          // leftpoly
-    {1, 2, 3, 4}        // bottompoly
+    {0, 4, 3}           // leftpoly
 };
 
 // -- CUBE VERTICES AND POLYGONS --//
@@ -62,12 +65,12 @@ std::vector<Vec3> cube_verts = {
     {-50, -50, 50},
 };
 std::vector<std::vector<float>> cube_polygons = {
-    {4, 0, 3, 7},          // frontpoly
-    {0, 1, 5, 4},          // rightpoly
-    {5, 1, 2, 6},          // backpoly
-    {3, 2, 6, 7},          // leftpoly
-    {0, 1, 2, 3},          // toppoly
-    {4, 5, 6, 7}           // bottompoly
+    {1, 0, 3, 2},  // top face
+    {0, 4, 7, 3},  // front face
+    {0, 1, 5, 4},  // right face
+    {5, 1, 2, 6},  // back face
+    {3, 7, 6, 2},  // left face
+    {4, 5, 6, 7}   // bottom face
 };
 
 // -- Object Struct -- //

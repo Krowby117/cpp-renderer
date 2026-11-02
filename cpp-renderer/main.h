@@ -9,19 +9,30 @@
 
 #include "structs.h"
 
+using namespace std;
+
+// ---- CONSTANTS ---- //
 // screen dimension constants
 constexpr int kScreenWidth{ 640 };
 constexpr int kScreenHeight{ 480 };
-constexpr int d{ 500 };
+constexpr float d{ 500 };
 
 // transformation constants
 constexpr int kTransform{ 15 };
 constexpr float kScale{ 1.1 };
 constexpr float kRotate{ 0.0873 };
 
+// ---- GLOBALS ---- //
+SDL_Window* gWindow{ nullptr }; // the window we'll be rendering to
+SDL_Renderer* gRenderer{ nullptr }; // the renderer
 
+// active object + list of loaded objects
+int active_i = 0;
+std::vector<Object> scene;
+
+// ---- MAIN FUNCTIONS ---- //
 bool init(); // Starts up SDL and creates the window
-void render(); // Render objects onto the screen
+void render(); // Renders the scene
 void close(); // Frees media and shuts down SDL
 void process_input(SDL_Keycode key); // process key press events
 
@@ -30,12 +41,14 @@ void render_line(Vec2 s, Vec2 e);
 void draw_line_h(Vec2 s, Vec2 e);
 void draw_line_v(Vec2 s, Vec2 e);
 
-// takes in a 3D point and converts it into a display coordinate (projects onto XY then coverts to display)
+
+// ---- HELPER FUNCTIONS ---- //
+// takes in a 3D point and converts it into a display coordinate
 Vec2 convert_to_display(Vec3 p);
 
-SDL_Window* gWindow{ nullptr }; // the window we'll be rendering to
-SDL_Renderer* gRenderer{ nullptr }; // the renderer
+// uses the backface culling algorithm to check if a polygon is visible
+bool is_visible(vector<Vec3>);
 
-// active object + list of loaded objects
-int active_i = 0;
-std::vector<Object> scene;
+float dot(Vec3 P, Vec3 Q);
+Vec3 cross(Vec3 P, Vec3 Q);
+Vec3 normalize(Vec3 P);
