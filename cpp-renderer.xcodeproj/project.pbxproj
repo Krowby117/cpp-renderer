@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB905A98306314F6004E8FE8 /* SDL3 in Frameworks */ = {isa = PBXBuildFile; fileRef = AB905A97306314F6004E8FE8 /* SDL3 */; };
 		AB905A99306314F6004E8FE8 /* SDL3 in Embed Libraries */ = {isa = PBXBuildFile; fileRef = AB905A97306314F6004E8FE8 /* SDL3 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AB905A9C3063150E004E8FE8 /* SDL3_image in Frameworks */ = {isa = PBXBuildFile; fileRef = AB905A9B3063150E004E8FE8 /* SDL3_image */; };
 		AB905A9D3063150E004E8FE8 /* SDL3_image in Embed Libraries */ = {isa = PBXBuildFile; fileRef = AB905A9B3063150E004E8FE8 /* SDL3_image */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AB905A9F3063151D004E8FE8 /* SDL3_ttf in Frameworks */ = {isa = PBXBuildFile; fileRef = AB905A9E3063151D004E8FE8 /* SDL3_ttf */; };
 		AB905AA03063151D004E8FE8 /* SDL3_ttf in Embed Libraries */ = {isa = PBXBuildFile; fileRef = AB905A9E3063151D004E8FE8 /* SDL3_ttf */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AB95889130A28EAF00D86825 /* SDL3_ttf in Frameworks */ = {isa = PBXBuildFile; fileRef = AB905A9E3063151D004E8FE8 /* SDL3_ttf */; };
+		AB95889230A28EC400D86825 /* SDL3 in Frameworks */ = {isa = PBXBuildFile; fileRef = AB905A97306314F6004E8FE8 /* SDL3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,11 +48,125 @@
 		AB905A97306314F6004E8FE8 /* SDL3 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = SDL3; path = ../../../../../Library/Frameworks/SDL3.framework/Versions/A/SDL3; sourceTree = "<group>"; };
 		AB905A9B3063150E004E8FE8 /* SDL3_image */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = SDL3_image; path = ../../../../../Library/Frameworks/SDL3_image.framework/Versions/A/SDL3_image; sourceTree = "<group>"; };
 		AB905A9E3063151D004E8FE8 /* SDL3_ttf */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = SDL3_ttf; path = ../../../../../Library/Frameworks/SDL3_ttf.framework/Versions/A/SDL3_ttf; sourceTree = "<group>"; };
+		AB9586FE30A28AC000D86825 /* example_apple_metal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_metal.xcodeproj; sourceTree = "<group>"; };
+		AB95870930A28AC000D86825 /* example_apple_metal4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_metal4.xcodeproj; sourceTree = "<group>"; };
+		AB95870E30A28AC000D86825 /* example_apple_opengl2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl2.xcodeproj; sourceTree = "<group>"; };
+		AB95871230A28AC000D86825 /* example_apple_opengl3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl3.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AB95888D30A28D1300D86825 /* Exceptions for "cpp-renderer" folder in "cpp-renderer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				external/imgui/backends/imgui_impl_allegro5.cpp,
+				external/imgui/backends/imgui_impl_android.cpp,
+				external/imgui/backends/imgui_impl_dx9.cpp,
+				external/imgui/backends/imgui_impl_dx10.cpp,
+				external/imgui/backends/imgui_impl_dx11.cpp,
+				external/imgui/backends/imgui_impl_dx12.cpp,
+				external/imgui/backends/imgui_impl_glfw.cpp,
+				external/imgui/backends/imgui_impl_glut.cpp,
+				external/imgui/backends/imgui_impl_metal.mm,
+				external/imgui/backends/imgui_impl_metal4.mm,
+				external/imgui/backends/imgui_impl_null.cpp,
+				external/imgui/backends/imgui_impl_opengl2.cpp,
+				external/imgui/backends/imgui_impl_opengl3.cpp,
+				external/imgui/backends/imgui_impl_osx.mm,
+				external/imgui/backends/imgui_impl_qnx.cpp,
+				external/imgui/backends/imgui_impl_sdl2.cpp,
+				external/imgui/backends/imgui_impl_sdl3.cpp,
+				external/imgui/backends/imgui_impl_sdlgpu3.cpp,
+				external/imgui/backends/imgui_impl_sdlrenderer2.cpp,
+				external/imgui/backends/imgui_impl_vulkan.cpp,
+				external/imgui/backends/imgui_impl_wgpu.cpp,
+				external/imgui/backends/imgui_impl_win32.cpp,
+				external/imgui/examples/example_allegro5/main.cpp,
+				external/imgui/examples/example_android_opengl3/main.cpp,
+				external/imgui/examples/example_apple_metal/main.mm,
+				external/imgui/examples/example_apple_metal/Makefile,
+				external/imgui/examples/example_apple_metal4/main.mm,
+				external/imgui/examples/example_apple_metal4/Makefile,
+				external/imgui/examples/example_apple_opengl2/main.mm,
+				external/imgui/examples/example_apple_opengl2/Makefile,
+				external/imgui/examples/example_apple_opengl3/main.mm,
+				external/imgui/examples/example_apple_opengl3/Makefile,
+				external/imgui/examples/example_glfw_metal/main.mm,
+				external/imgui/examples/example_glfw_metal/Makefile,
+				external/imgui/examples/example_glfw_opengl2/main.cpp,
+				external/imgui/examples/example_glfw_opengl2/Makefile,
+				external/imgui/examples/example_glfw_opengl3/main.cpp,
+				external/imgui/examples/example_glfw_opengl3/Makefile,
+				external/imgui/examples/example_glfw_vulkan/main.cpp,
+				external/imgui/examples/example_glfw_vulkan/Makefile,
+				external/imgui/examples/example_glfw_wgpu/main.cpp,
+				external/imgui/examples/example_glut_opengl2/main.cpp,
+				external/imgui/examples/example_glut_opengl2/Makefile,
+				external/imgui/examples/example_null/main.cpp,
+				external/imgui/examples/example_null/Makefile,
+				external/imgui/examples/example_qnx_opengl3/main.cpp,
+				external/imgui/examples/example_qnx_opengl3/Makefile,
+				external/imgui/examples/example_qnx_opengl3/nto/aarch64/Makefile,
+				external/imgui/examples/example_qnx_opengl3/nto/aarch64/o.le/Makefile,
+				external/imgui/examples/example_qnx_opengl3/nto/Makefile,
+				external/imgui/examples/example_qnx_opengl3/nto/x86_64/Makefile,
+				external/imgui/examples/example_qnx_opengl3/nto/x86_64/o/Makefile,
+				external/imgui/examples/example_qnx_vulkan/main.cpp,
+				external/imgui/examples/example_qnx_vulkan/Makefile,
+				external/imgui/examples/example_qnx_vulkan/nto/aarch64/Makefile,
+				external/imgui/examples/example_qnx_vulkan/nto/aarch64/o.le/Makefile,
+				external/imgui/examples/example_qnx_vulkan/nto/Makefile,
+				external/imgui/examples/example_qnx_vulkan/nto/x86_64/Makefile,
+				external/imgui/examples/example_qnx_vulkan/nto/x86_64/o/Makefile,
+				external/imgui/examples/example_sdl2_directx11/main.cpp,
+				external/imgui/examples/example_sdl2_metal/main.mm,
+				external/imgui/examples/example_sdl2_metal/Makefile,
+				external/imgui/examples/example_sdl2_opengl2/main.cpp,
+				external/imgui/examples/example_sdl2_opengl2/Makefile,
+				external/imgui/examples/example_sdl2_opengl3/main.cpp,
+				external/imgui/examples/example_sdl2_opengl3/Makefile,
+				external/imgui/examples/example_sdl2_sdlrenderer2/main.cpp,
+				external/imgui/examples/example_sdl2_sdlrenderer2/Makefile,
+				external/imgui/examples/example_sdl2_vulkan/main.cpp,
+				external/imgui/examples/example_sdl2_vulkan/Makefile,
+				external/imgui/examples/example_sdl2_wgpu/main.cpp,
+				external/imgui/examples/example_sdl3_directx11/main.cpp,
+				external/imgui/examples/example_sdl3_metal/main.mm,
+				external/imgui/examples/example_sdl3_metal/Makefile,
+				external/imgui/examples/example_sdl3_metal4/main.mm,
+				external/imgui/examples/example_sdl3_metal4/Makefile,
+				external/imgui/examples/example_sdl3_opengl3/main.cpp,
+				external/imgui/examples/example_sdl3_opengl3/Makefile,
+				external/imgui/examples/example_sdl3_sdlgpu3/main.cpp,
+				external/imgui/examples/example_sdl3_sdlgpu3/Makefile,
+				external/imgui/examples/example_sdl3_sdlrenderer3/main.cpp,
+				external/imgui/examples/example_sdl3_sdlrenderer3/Makefile,
+				external/imgui/examples/example_sdl3_vulkan/main.cpp,
+				external/imgui/examples/example_sdl3_vulkan/Makefile,
+				external/imgui/examples/example_sdl3_wgpu/main.cpp,
+				external/imgui/examples/example_win32_directx9/main.cpp,
+				external/imgui/examples/example_win32_directx10/main.cpp,
+				external/imgui/examples/example_win32_directx11/main.cpp,
+				external/imgui/examples/example_win32_directx12/main.cpp,
+				external/imgui/examples/example_win32_opengl3/main.cpp,
+				external/imgui/examples/example_win32_vulkan/main.cpp,
+				"external/imgui/examples/libs/glfw/lib-vc2010-32/glfw3.lib",
+				"external/imgui/examples/libs/glfw/lib-vc2010-64/glfw3.lib",
+				external/imgui/examples/libs/usynergy/uSynergy.c,
+				external/imgui/imgui_demo.cpp,
+				external/imgui/misc/cpp/imgui_stdlib.cpp,
+				external/imgui/misc/fonts/binary_to_compressed_c.cpp,
+				external/imgui/misc/freetype/imgui_freetype.cpp,
+			);
+			target = AB905A8230608DD2004E8FE8 /* cpp-renderer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AB905A8530608DD2004E8FE8 /* cpp-renderer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AB95888D30A28D1300D86825 /* Exceptions for "cpp-renderer" folder in "cpp-renderer" target */,
+			);
 			path = "cpp-renderer";
 			sourceTree = "<group>";
 		};
@@ -63,9 +177,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB95889230A28EC400D86825 /* SDL3 in Frameworks */,
+				AB95889130A28EAF00D86825 /* SDL3_ttf in Frameworks */,
 				AB905A9C3063150E004E8FE8 /* SDL3_image in Frameworks */,
-				AB905A9F3063151D004E8FE8 /* SDL3_ttf in Frameworks */,
-				AB905A98306314F6004E8FE8 /* SDL3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +214,34 @@
 				AB905A8E30608F32004E8FE8 /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AB9587E630A28AC000D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB9587E830A28AC000D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB9587EA30A28AC000D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB9587EC30A28AC000D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +296,24 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AB905A8430608DD2004E8FE8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AB9587EC30A28AC000D86825 /* Products */;
+					ProjectRef = AB9586FE30A28AC000D86825 /* example_apple_metal.xcodeproj */;
+				},
+				{
+					ProductGroup = AB9587E630A28AC000D86825 /* Products */;
+					ProjectRef = AB95870930A28AC000D86825 /* example_apple_metal4.xcodeproj */;
+				},
+				{
+					ProductGroup = AB9587E830A28AC000D86825 /* Products */;
+					ProjectRef = AB95870E30A28AC000D86825 /* example_apple_opengl2.xcodeproj */;
+				},
+				{
+					ProductGroup = AB9587EA30A28AC000D86825 /* Products */;
+					ProjectRef = AB95871230A28AC000D86825 /* example_apple_opengl3.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AB905A8230608DD2004E8FE8 /* cpp-renderer */,
@@ -296,6 +456,8 @@
 					/Library/Frameworks/SDL3.framework/Headers,
 					/Library/Frameworks/SDL3_ttf.framework/Headers,
 					/Library/Frameworks/SDL3_image.framework/Headers,
+					"$(PROJECT_DIR)/external/imgui",
+					"$(PROJECT_DIR)/external/imgui/backends",
 				);
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
@@ -303,6 +465,8 @@
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3.framework/Versions/A",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3_image.framework/Versions/A",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3_ttf.framework/Versions/A",
+					"$(PROJECT_DIR)/cpp-renderer/external/imgui/examples/libs/glfw/lib-vc2010-32",
+					"$(PROJECT_DIR)/cpp-renderer/external/imgui/examples/libs/glfw/lib-vc2010-64",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -317,6 +481,8 @@
 					/Library/Frameworks/SDL3.framework/Headers,
 					/Library/Frameworks/SDL3_ttf.framework/Headers,
 					/Library/Frameworks/SDL3_image.framework/Headers,
+					"$(PROJECT_DIR)/external/imgui",
+					"$(PROJECT_DIR)/external/imgui/backends",
 				);
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
@@ -324,6 +490,8 @@
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3.framework/Versions/A",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3_image.framework/Versions/A",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL3_ttf.framework/Versions/A",
+					"$(PROJECT_DIR)/cpp-renderer/external/imgui/examples/libs/glfw/lib-vc2010-32",
+					"$(PROJECT_DIR)/cpp-renderer/external/imgui/examples/libs/glfw/lib-vc2010-64",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
