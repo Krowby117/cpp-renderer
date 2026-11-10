@@ -50,6 +50,11 @@ struct Object {
     // collection of object's verts and polygons
     vector<Vec3> vertices;
     vector<vector<float>> polygons;
+    
+    // transformation data
+    Vec3 pos;
+    float size;
+    Vec3 rotation;
 
     // copy of objects vertices without transformations
     std::vector<Vec3> orig_vertices;

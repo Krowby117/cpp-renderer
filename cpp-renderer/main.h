@@ -32,7 +32,9 @@ std::vector<Object> scene;
 
 // ---- MAIN FUNCTIONS ---- //
 bool init(); // Starts up SDL and creates the window
+void imgui_init(); // Initializes ImGUI
 void render(); // Renders the scene
+void draw_ui(); // Draws the ImGui ui
 void close(); // Frees media and shuts down SDL
 void process_input(SDL_Keycode key); // process key press events
 

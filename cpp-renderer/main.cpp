@@ -1,5 +1,9 @@
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
+#include <SDL3/SDL_render.h>
+#include "imgui.h"
+#include "imgui_impl_sdl3.h"
+#include "imgui_impl_sdlrenderer3.h"
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -16,23 +20,36 @@ int main(int argc, char* args[])
     }
     
     // quit program signal
-    bool quit{ false };
+    bool is_running{ true };
     
     // event data
     SDL_Event e;
     SDL_zero(e);
     
     // MAIN LOOP //
-    render();
-    while (quit == false) {
-        // get event data
-        while (SDL_PollEvent(&e) == true ) {
-            if (e.type == SDL_EVENT_QUIT) // if the event is a quit type, end the main loop
-                quit = true;
+    while (is_running == true) {
+        // event data code
+        SDL_Event e;
+        if (SDL_PollEvent(&e)) {
+            ImGui_ImplSDL3_ProcessEvent(&e);
+            if (e.type == SDL_EVENT_QUIT) // if quit event, end the render loop
+                is_running = false;
             else if (e.type == SDL_EVENT_KEY_DOWN) // if key down event, process input
                 process_input(e.key.key);
         }
+        
+        // rendering code
+        ImGui_ImplSDLRenderer3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+        
+        draw_ui();
+        
+        ImGui::Render();
+        
+        render();
     }
+    
     
     // clean up and end the program
     close();
@@ -60,16 +77,25 @@ bool init()
         }
     }
     
+    // initialize imgui
+    imgui_init();
+    
     // initialize scene object list
     scene.push_back(Object(CUBE));
-    scene.push_back(Object(PYRAMID));
-    scene.push_back(Object(CUBE));
-    
-    // the two cubes share a base vertex list, this permanately moves them to the left and right
-    scene[0].perm_translate({-150,0,0});
-    scene[2].perm_translate({150,0,0});
     
     return success;
+}
+
+void imgui_init()
+{
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+    
+    ImGui_ImplSDL3_InitForSDLRenderer(gWindow, gRenderer);
+    ImGui_ImplSDLRenderer3_Init(gRenderer);
 }
 
 void close()
@@ -126,7 +152,48 @@ void render()
     }
     
     // update the renderer
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), gRenderer);
     SDL_RenderPresent(gRenderer);
+}
+
+void draw_ui() {
+    ImGui::Begin("Control Panel", nullptr, ImGuiWindowFlags_NoCollapse);
+    ImGui::BeginTable("Object Controls", 4);
+    
+    // - XYZ Translation Buttons - //
+    ImGui::TableNextColumn();
+    ImGui::Text("Translations");
+    if (ImGui::Button("-X##t"))    scene[active_i].translate({-kTransform,0,0}); ImGui::SameLine();
+    if (ImGui::Button("+X##t"))    scene[active_i].translate({kTransform,0,0});
+    if (ImGui::Button("-Y##t"))    scene[active_i].translate({0,kTransform,0}); ImGui::SameLine();
+    if (ImGui::Button("+Y##t"))    scene[active_i].translate({0,-kTransform,0});
+    if (ImGui::Button("-Z##t"))    scene[active_i].translate({0,0,-kTransform}); ImGui::SameLine();
+    if (ImGui::Button("+Z##t"))    scene[active_i].translate({0,0,kTransform});
+
+    // - Scaling Buttons - //
+    ImGui::TableNextColumn();
+    ImGui::Text("Scaling");
+    if (ImGui::Button("+##s"))    scene[active_i].scale(kScale); ImGui::SameLine();
+    if (ImGui::Button("-##s"))    scene[active_i].scale(1/kScale);
+
+    // - XYZ Rotation Buttons - //
+    ImGui::TableNextColumn();
+    ImGui::Text("Rotations");
+    if (ImGui::Button("-X##r"))    scene[active_i].rotate_x(kRotate); ImGui::SameLine();
+    if (ImGui::Button("+X##r"))    scene[active_i].rotate_x(-kRotate);
+    if (ImGui::Button("-Y##r"))    scene[active_i].rotate_y(kRotate); ImGui::SameLine();
+    if (ImGui::Button("+Y##r"))    scene[active_i].rotate_y(-kRotate);
+    if (ImGui::Button("-Z##r"))    scene[active_i].rotate_z(kRotate); ImGui::SameLine();
+    if (ImGui::Button("+Z##r"))    scene[active_i].rotate_z(-kRotate);
+    
+    // - Misc Buttons - //
+    ImGui::TableNextColumn();
+    ImGui::Text("Miscellaneous");
+    if (ImGui::Button("Reset##m"))    scene[active_i].reset();
+    if (ImGui::Button("Swith##m"))    active_i = (active_i + 1) % scene.size(); ImGui::SameLine();
+
+    ImGui::EndTable();
+    ImGui::End();
 }
 
 Vec2 convert_to_display(Vec3 p) {
@@ -308,6 +375,4 @@ void process_input(SDL_Keycode key) {
     // z rotation
     if (key == SDLK_5)      obj->rotate_z(kRotate);
     if (key == SDLK_6)      obj->rotate_z(-kRotate);
-    
-    render();
 }

@@ -74,7 +74,6 @@
 				external/imgui/backends/imgui_impl_osx.mm,
 				external/imgui/backends/imgui_impl_qnx.cpp,
 				external/imgui/backends/imgui_impl_sdl2.cpp,
-				external/imgui/backends/imgui_impl_sdl3.cpp,
 				external/imgui/backends/imgui_impl_sdlgpu3.cpp,
 				external/imgui/backends/imgui_impl_sdlrenderer2.cpp,
 				external/imgui/backends/imgui_impl_vulkan.cpp,
@@ -152,7 +151,6 @@
 				"external/imgui/examples/libs/glfw/lib-vc2010-32/glfw3.lib",
 				"external/imgui/examples/libs/glfw/lib-vc2010-64/glfw3.lib",
 				external/imgui/examples/libs/usynergy/uSynergy.c,
-				external/imgui/imgui_demo.cpp,
 				external/imgui/misc/cpp/imgui_stdlib.cpp,
 				external/imgui/misc/fonts/binary_to_compressed_c.cpp,
 				external/imgui/misc/freetype/imgui_freetype.cpp,
@@ -458,6 +456,7 @@
 					/Library/Frameworks/SDL3_image.framework/Headers,
 					"$(PROJECT_DIR)/external/imgui",
 					"$(PROJECT_DIR)/external/imgui/backends",
+					/opt/homebrew/include,
 				);
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
@@ -483,6 +482,7 @@
 					/Library/Frameworks/SDL3_image.framework/Headers,
 					"$(PROJECT_DIR)/external/imgui",
 					"$(PROJECT_DIR)/external/imgui/backends",
+					/opt/homebrew/include,
 				);
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
