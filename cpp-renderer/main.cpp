@@ -157,54 +157,52 @@ void render()
 }
 
 void draw_ui() {
-    ImGui::Begin("Control Panel", nullptr, ImGuiWindowFlags_NoCollapse);
-    ImGui::BeginTable("Object Controls", 4);
-    
-    // - XYZ Translation Buttons - //
-    ImGui::TableNextColumn();
-    ImGui::Text("Translations");
-    if (ImGui::Button("-X##t"))    scene[active_i].translate({-kTransform,0,0}); ImGui::SameLine();
-    if (ImGui::Button("+X##t"))    scene[active_i].translate({kTransform,0,0});
-    if (ImGui::Button("-Y##t"))    scene[active_i].translate({0,kTransform,0}); ImGui::SameLine();
-    if (ImGui::Button("+Y##t"))    scene[active_i].translate({0,-kTransform,0});
-    if (ImGui::Button("-Z##t"))    scene[active_i].translate({0,0,-kTransform}); ImGui::SameLine();
-    if (ImGui::Button("+Z##t"))    scene[active_i].translate({0,0,kTransform});
-
-    // - Scaling Buttons - //
-    ImGui::TableNextColumn();
-    ImGui::Text("Scaling");
-    if (ImGui::Button("+##s"))    scene[active_i].scale(kScale); ImGui::SameLine();
-    if (ImGui::Button("-##s"))    scene[active_i].scale(1/kScale);
-
-    // - XYZ Rotation Buttons - //
-    ImGui::TableNextColumn();
-    ImGui::Text("Rotations");
-    if (ImGui::Button("-X##r"))    scene[active_i].rotate_x(kRotate); ImGui::SameLine();
-    if (ImGui::Button("+X##r"))    scene[active_i].rotate_x(-kRotate);
-    if (ImGui::Button("-Y##r"))    scene[active_i].rotate_y(kRotate); ImGui::SameLine();
-    if (ImGui::Button("+Y##r"))    scene[active_i].rotate_y(-kRotate);
-    if (ImGui::Button("-Z##r"))    scene[active_i].rotate_z(kRotate); ImGui::SameLine();
-    if (ImGui::Button("+Z##r"))    scene[active_i].rotate_z(-kRotate);
-    
-    // - Misc Buttons - //
-    ImGui::TableNextColumn();
-    ImGui::Text("Misc");
-    if (ImGui::Button("Reset##m"))    scene[active_i].reset();
-    
-    // only let users create a new object if there are less than 5 in the scene
-    if (scene.size() < 5) {
-        if (ImGui::Button("Cube##m"))     new_object(CUBE); ImGui::SameLine();
-        if (ImGui::Button("Pyramid##m"))  new_object(PYRAMID);
+    if (ImGui::BeginTable("Object Controls", 4, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_BordersInnerV)) {
+        // - XYZ Translation Buttons - //
+        ImGui::TableNextColumn();
+        ImGui::Text("Translations");
+        if (ImGui::Button("-X##t"))    scene[active_i].translate({-kTransform,0,0}); ImGui::SameLine();
+        if (ImGui::Button("+X##t"))    scene[active_i].translate({kTransform,0,0});
+        if (ImGui::Button("-Y##t"))    scene[active_i].translate({0,kTransform,0}); ImGui::SameLine();
+        if (ImGui::Button("+Y##t"))    scene[active_i].translate({0,-kTransform,0});
+        if (ImGui::Button("-Z##t"))    scene[active_i].translate({0,0,-kTransform}); ImGui::SameLine();
+        if (ImGui::Button("+Z##t"))    scene[active_i].translate({0,0,kTransform});
+        
+        // - Scaling Buttons - //
+        ImGui::TableNextColumn();
+        ImGui::Text("Scaling");
+        if (ImGui::Button("+##s"))    scene[active_i].scale(kScale); ImGui::SameLine();
+        if (ImGui::Button("-##s"))    scene[active_i].scale(1/kScale);
+        
+        // - XYZ Rotation Buttons - //
+        ImGui::TableNextColumn();
+        ImGui::Text("Rotations");
+        if (ImGui::Button("-X##r"))    scene[active_i].rotate_x(kRotate); ImGui::SameLine();
+        if (ImGui::Button("+X##r"))    scene[active_i].rotate_x(-kRotate);
+        if (ImGui::Button("-Y##r"))    scene[active_i].rotate_y(kRotate); ImGui::SameLine();
+        if (ImGui::Button("+Y##r"))    scene[active_i].rotate_y(-kRotate);
+        if (ImGui::Button("-Z##r"))    scene[active_i].rotate_z(kRotate); ImGui::SameLine();
+        if (ImGui::Button("+Z##r"))    scene[active_i].rotate_z(-kRotate);
+        
+        // - Misc Buttons - //
+        ImGui::TableNextColumn();
+        ImGui::Text("Misc");
+        if (ImGui::Button("Reset##m"))    scene[active_i].reset();
+        
+        // only let users create a new object if there are less than 5 in the scene
+        if (scene.size() < 5) {
+            if (ImGui::Button("Cube##m"))     new_object(CUBE); ImGui::SameLine();
+            if (ImGui::Button("Pyramid##m"))  new_object(PYRAMID);
+        }
+        
+        // only show these options if there is more than one object in the scene
+        if (scene.size() > 1) {
+            if (ImGui::Button("Swith##m"))    active_i = (active_i + 1) % scene.size(); ImGui::SameLine();
+            if (ImGui::Button("Remove##m"))    remove_object();
+        }
+        
+        ImGui::EndTable();
     }
-    
-    // only show these options if there is more than one object in the scene
-    if (scene.size() > 1) {
-        if (ImGui::Button("Swith##m"))    active_i = (active_i + 1) % scene.size(); ImGui::SameLine();
-        if (ImGui::Button("Remove##m"))    remove_object();
-    }
-
-    ImGui::EndTable();
-    ImGui::End();
 }
 
 void new_object(ObjType t) {

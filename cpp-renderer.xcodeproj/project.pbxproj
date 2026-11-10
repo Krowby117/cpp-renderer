@@ -52,6 +52,10 @@
 		AB95870930A28AC000D86825 /* example_apple_metal4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_metal4.xcodeproj; sourceTree = "<group>"; };
 		AB95870E30A28AC000D86825 /* example_apple_opengl2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl2.xcodeproj; sourceTree = "<group>"; };
 		AB95871230A28AC000D86825 /* example_apple_opengl3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl3.xcodeproj; sourceTree = "<group>"; };
+		AB958CEF30A3CD1100D86825 /* example_apple_metal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_metal.xcodeproj; sourceTree = "<group>"; };
+		AB958CFA30A3CD1100D86825 /* example_apple_metal4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_metal4.xcodeproj; sourceTree = "<group>"; };
+		AB958CFF30A3CD1100D86825 /* example_apple_opengl2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl2.xcodeproj; sourceTree = "<group>"; };
+		AB958D0330A3CD1100D86825 /* example_apple_opengl3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example_apple_opengl3.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -242,6 +246,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AB958E0230A3CD1100D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB958E0430A3CD1100D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB958E0630A3CD1100D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB958E0830A3CD1100D86825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -300,12 +332,28 @@
 					ProjectRef = AB9586FE30A28AC000D86825 /* example_apple_metal.xcodeproj */;
 				},
 				{
+					ProductGroup = AB958E0630A3CD1100D86825 /* Products */;
+					ProjectRef = AB958CEF30A3CD1100D86825 /* example_apple_metal.xcodeproj */;
+				},
+				{
 					ProductGroup = AB9587E630A28AC000D86825 /* Products */;
 					ProjectRef = AB95870930A28AC000D86825 /* example_apple_metal4.xcodeproj */;
 				},
 				{
+					ProductGroup = AB958E0230A3CD1100D86825 /* Products */;
+					ProjectRef = AB958CFA30A3CD1100D86825 /* example_apple_metal4.xcodeproj */;
+				},
+				{
+					ProductGroup = AB958E0830A3CD1100D86825 /* Products */;
+					ProjectRef = AB958CFF30A3CD1100D86825 /* example_apple_opengl2.xcodeproj */;
+				},
+				{
 					ProductGroup = AB9587E830A28AC000D86825 /* Products */;
 					ProjectRef = AB95870E30A28AC000D86825 /* example_apple_opengl2.xcodeproj */;
+				},
+				{
+					ProductGroup = AB958E0430A3CD1100D86825 /* Products */;
+					ProjectRef = AB958D0330A3CD1100D86825 /* example_apple_opengl3.xcodeproj */;
 				},
 				{
 					ProductGroup = AB9587EA30A28AC000D86825 /* Products */;
