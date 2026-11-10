@@ -112,7 +112,7 @@ void close()
 void render()
 {
     // clean the screen
-    SDL_SetRenderDrawColor(gRenderer, 75, 75, 75, 255);
+    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
     SDL_RenderClear(gRenderer);
     
     // iterate through each polygon in the object and grab its points
@@ -140,7 +140,7 @@ void render()
                 
                 // if active object, use special draw color
                 if (cur_i == active_i)
-                    SDL_SetRenderDrawColor(gRenderer, 75, 180, 75, 255);
+                    SDL_SetRenderDrawColor(gRenderer, 105, 220, 105, 255);
                 else
                     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
                 
@@ -188,12 +188,33 @@ void draw_ui() {
     
     // - Misc Buttons - //
     ImGui::TableNextColumn();
-    ImGui::Text("Miscellaneous");
+    ImGui::Text("Misc");
     if (ImGui::Button("Reset##m"))    scene[active_i].reset();
-    if (ImGui::Button("Swith##m"))    active_i = (active_i + 1) % scene.size(); ImGui::SameLine();
+    
+    // only let users create a new object if there are less than 5 in the scene
+    if (scene.size() < 5) {
+        if (ImGui::Button("Cube##m"))     new_object(CUBE); ImGui::SameLine();
+        if (ImGui::Button("Pyramid##m"))  new_object(PYRAMID);
+    }
+    
+    // only show these options if there is more than one object in the scene
+    if (scene.size() > 1) {
+        if (ImGui::Button("Swith##m"))    active_i = (active_i + 1) % scene.size(); ImGui::SameLine();
+        if (ImGui::Button("Remove##m"))    remove_object();
+    }
 
     ImGui::EndTable();
     ImGui::End();
+}
+
+void new_object(ObjType t) {
+    scene.push_back(Object(t));
+    active_i = scene.size() - 1;
+}
+
+void remove_object() {
+    scene.erase(scene.begin() + active_i);
+    active_i = (active_i + 1) % scene.size();
 }
 
 Vec2 convert_to_display(Vec3 p) {

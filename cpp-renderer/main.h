@@ -47,6 +47,8 @@ void draw_line_v(Vec2 s, Vec2 e);
 // ---- HELPER FUNCTIONS ---- //
 // takes in a 3D point and converts it into a display coordinate
 Vec2 convert_to_display(Vec3 p);
+void new_object(ObjType t);
+void remove_object();
 
 // uses the backface culling algorithm to check if a polygon is visible
 bool is_visible(vector<Vec3>);
