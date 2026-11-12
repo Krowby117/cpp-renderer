@@ -115,11 +115,15 @@ void render()
     SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
     SDL_RenderClear(gRenderer);
     
+    // init helper vars
+    vector<Vec3> polygon;
+    vector<Vec2> display;
+    
     // iterate through each polygon in the object and grab its points
     int cur_i = 0;
     for (Object obj : scene) {
         for (vector<float> p : obj.polygons) {
-            vector<Vec3> polygon;
+            polygon = {};
             for (int i : p) {
                 polygon.push_back(obj.vertices[i]);
             }
@@ -128,15 +132,13 @@ void render()
             if (!is_visible(polygon))
                 continue;
             
+            display = display_polygon(polygon);
+            
             // iterate through the points in pairs to draw lines
             for (int i = 0; i < polygon.size(); i++) {
                 // grab the start and end point of the line
-                Vec3 start = polygon[i];
-                Vec3 end = polygon[(i+1) % polygon.size()];
-                
-                // convert to display coords
-                Vec2 d_start = convert_to_display(start);
-                Vec2 d_end = convert_to_display(end);
+                Vec2 start = display[i];
+                Vec2 end = display[(i+1) % display.size()];
                 
                 // if active object, use special draw color
                 if (cur_i == active_i)
@@ -145,7 +147,7 @@ void render()
                     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
                 
                 // draw the line
-                render_line(d_start, d_end);
+                render_line(start, end);
             }
         }
         cur_i++;
@@ -207,7 +209,7 @@ void draw_ui() {
 
 void new_object(ObjType t) {
     scene.push_back(Object(t));
-    active_i = scene.size() - 1;
+    active_i = scene.size() - 1.0;
 }
 
 void remove_object() {
@@ -234,71 +236,90 @@ Vec2 convert_to_display(Vec3 p) {
     return disp;
 }
 
+vector<Vec2> display_polygon(vector<Vec3> polygon) {
+    vector<Vec2> display;
+    for (Vec3 p : polygon) {
+        // project the 3D point onto the XY plane
+        float den = d + p.z;
+        Vec3 proj = {
+            d * (p.x/ den),
+            d * (p.y/ den),
+            d * (p.z / den)
+        };
+        
+        // convert to display coordinates
+        Vec2 disp = {
+            (kScreenWidth / 2) + proj.x,
+            (kScreenHeight / 2) - proj.y
+        };
+        
+        display.push_back(disp);
+    }
+    
+    return display;
+}
+
 // implements Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
 // https://www.youtube.com/watch?v=CceepU1vIKo
 void render_line(Vec2 s, Vec2 e) {
+    // draws a horizontal line
     if (abs(e.x-s.x) > abs(e.y-s.y)) {
-        draw_line_h(s, e);
-    } else {
-        draw_line_v(s, e);
-    }
-}
-void draw_line_h(Vec2 s, Vec2 e) {
-    // if end point is before the start point, swap them
-    if (s.x > e.x) {
-        Vec2 temp = {s.x, s.y};
-        s = {e.x, e.y};
-        e = {temp.x, temp.y};
-    }
-    
-    int dx = e.x - s.x;
-    int dy = e.y - s.y;
-    
-    int dir = (dy < 0) ? -1 : 1;
-    dy *= dir;
-    
-    if (dx != 0) {
-        int y = s.y;
-        int p = 2*dy - dx;
-        
-        for (int i = 0; i <= dx; i++) {
-            SDL_RenderPoint(gRenderer, s.x + i, y);
-            if (p >= 0) {
-                y += dir;
-                p -= 2*dx;
-            }
-            
-            p += 2*dy;
+        // if end point is before the start point, swap them
+        if (s.x > e.x) {
+            Vec2 temp = {s.x, s.y};
+            s = {e.x, e.y};
+            e = {temp.x, temp.y};
         }
-    }
-}
-void draw_line_v(Vec2 s, Vec2 e) {
-    // if end point is before the start point, swap them
-    if (s.y > e.y) {
-        Vec2 temp = {s.x, s.y};
-        s = {e.x, e.y};
-        e = {temp.x, temp.y};
-    }
-    
-    int dx = e.x - s.x;
-    int dy = e.y - s.y;
-    
-    int dir = (dx < 0) ? -1 : 1;
-    dx *= dir;
-    
-    if (dy != 0) {
-        int x = s.x;
-        int p = 2*dx - dy;
         
-        for (int i = 0; i <= dy; i++) {
-            SDL_RenderPoint(gRenderer, x, s.y + i);
-            if (p >= 0) {
-                x += dir;
-                p -= 2*dy;
-            }
+        int dx = e.x - s.x;
+        int dy = e.y - s.y;
+        
+        int dir = (dy < 0) ? -1 : 1;
+        dy *= dir;
+        
+        if (dx != 0) {
+            int y = s.y;
+            int p = 2*dy - dx;
             
-            p += 2*dx;
+            for (int i = 0; i <= dx; i++) {
+                SDL_RenderPoint(gRenderer, s.x + i, y);
+                if (p >= 0) {
+                    y += dir;
+                    p -= 2*dx;
+                }
+                
+                p += 2*dy;
+            }
+        }
+    // draws a vertical line
+    } else {
+        // if end point is before the start point, swap them
+        if (s.y > e.y) {
+            Vec2 temp = {s.x, s.y};
+            s = {e.x, e.y};
+            e = {temp.x, temp.y};
+        }
+        
+        int dx = e.x - s.x;
+        int dy = e.y - s.y;
+        
+        int dir = (dx < 0) ? -1 : 1;
+        dx *= dir;
+        
+        if (dy != 0) {
+            int x = s.x;
+            int p = 2*dx - dy;
+            
+            for (int i = 0; i <= dy; i++) {
+                SDL_RenderPoint(gRenderer, x, s.y + i);
+                if (p >= 0) {
+                    x += dir;
+                    p -= 2*dy;
+                }
+                
+                p += 2*dx;
+            }
         }
     }
 }

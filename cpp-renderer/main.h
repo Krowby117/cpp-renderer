@@ -46,7 +46,8 @@ void draw_line_v(Vec2 s, Vec2 e);
 
 // ---- HELPER FUNCTIONS ---- //
 // takes in a 3D point and converts it into a display coordinate
-Vec2 convert_to_display(Vec3 p);
+vector<Vec2> display_polygon(vector<Vec3> polygon);
+
 void new_object(ObjType t);
 void remove_object();
 
